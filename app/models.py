@@ -4,12 +4,12 @@ import datetime
 import os
 # Create your models here.
 
-def get_file_path(request, filename):
+def get_file_path(request,filename):
     original_filename=filename
-    nowTime=datetime.datetime.now.strtime('%d%m%Y :%H:%M:%s')
-    filename="%s%s" % (nowTime.original_filename)
-    return os.path.join('upload/', filename)
-
+    nowtime=datetime.datetime.now().strftime('%y%m%d%H:%M:%S')
+    filename="%s%s"%(nowtime, original_filename)
+    return os.path.join('uploads/',filename)
+    
 class Category(models.Model):
     slug=models.CharField(max_length=150, null=False, blank=False)
     cat_name=models.CharField(max_length=50, null=False, blank=False)
