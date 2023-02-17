@@ -22,3 +22,17 @@ def collectionviews(request,slug):
         messages.error(request, 'Category not found')
         return redirect("/collections")
     return render(request, "product/categoryview.html", context)
+
+
+def productviews(request, cat_slug, prod_slug):
+    if(Category.objects.filter(slug=cat_slug, status=0)):
+        if(Product.objects.filter(slug=prod_slug, status=0)):
+            products=Product.objects.filter(slug=prod_slug, status=0).first()
+            context={'products':products}
+        else:
+            messages.error(request, 'Product not found')
+            return redirect('collections')
+    else:
+        messages.error(request, 'Category not found')
+        return redirect('collections')
+    return render(request, 'product/productviews.html' , context)

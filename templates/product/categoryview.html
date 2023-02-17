@@ -18,6 +18,7 @@
             {% for item in products %}
                 <div class="col-md-3 mt-3">
                     <div class="card">
+                        <a href="{% url 'productviews' item.category.slug item.slug %}">
                             <div class="card-body">
                                 <div class="catagory-image">
                                     <img src="{{ item.prod_image.url }}"  alt="catagory-image" class="w-100">
@@ -26,6 +27,7 @@
                                 <span class="float-start">Rs. {{item.original_price}}</span>
                                 <span class="float-end">Rs. {{item.selling_price}}</span>
                             </div>
+                        </a>
                     </div>
                 </div>
             {% endfor %}

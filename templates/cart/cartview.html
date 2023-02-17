@@ -1,0 +1,73 @@
+{% extends 'main/base.html' %}
+{% block body %}
+
+<div class="py-1 my-4 bg-warning">
+    <div class="container-fluid my-4 ">
+        <a class="text-dark" href="{% url 'home' %}"> Home /</a>
+        <a class="text-dark" href="{% url 'cart' %}"> Cart </a>
+    </div>
+</div>
+
+
+<div class="py-5">
+    <div class="container ">
+        <div class="row">
+            <div class="col-md-12 my-4">
+                <div class="card shadow ">
+                    <div class="card-body cartdata">
+                        {% if cart %}
+                            {% for item in cart %}
+                                <div class="row product_data">
+                                    <div class="col-md-2 my-auto">
+                                        <img src="{{ item.product.prod_image.url }}" height="100px" width="100px" alt="image here" style="margin-left: 21px;margin-bottom: 19px;">
+                                    </div>
+                                    <div class="col-md-2 text-center my-auto">
+                                        <label class="name sanket" for="name">Product Name</label>
+                                        <h6 class="my-2">{{ item.product.prod_name }}</h6>
+                                    </div>
+                                    <div class="col-md-2 text-center my-auto">
+                                        <label class="name sanket" for="name">Price</label>
+                                        <h6 class="my-2">{{ item.product.selling_price }}</h6>
+                                    </div>
+                                    <div class="col-md-2 text-center my-auto">
+                                        <input type="hidden" value="{{ item.product_id }}" class="prod_id">
+                                        {% csrf_token %}
+                                        {% if item.product.quantity >= item.product_qty %}
+                                            <p class="text-white bg-success prod_qty_err_msg">In stock</p>
+                                            <div class="input-group text-center mb-3" >
+                                                <input type="hidden" value="{{ item.Product.quantity }}" class="prod_qty">
+                                                <button class="input-group-text btn-danger changeQuantity decrement-btn">-</button>
+                                                <input type="text" name="quantity" class="from-control qty-input text-center" value="{{ item.product_qty }}" style="width: 65px;" > 
+                                                <button class="input-group-text btn-warning changeQuantity increment-btn">+</button>
+                                            </div>
+                                        {% else %}
+                                        <p class="text-white bg-danger prod_qty_err_msg">Out Of Stock</p>
+                                        {% endif %}
+                                                                                
+                                    </div>
+                                    <div class="col-md-2 text-center my-auto">
+                                        <label class="name sanket" for="name">Quantity</label>
+                                        <h6 class="my-2"> {{ item.product_qty }}</h6>
+                                    </div>
+                                    <div class="col-md-2 text-center my-auto">
+                                        <button class="btn btn-danger float-start delete-cart-item"><i class="fa fa-trash"></i> Remove</button>
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div class="d-grid gap-2 col-6 float-end ">
+                                        <a class="btn btn-success " type="button" href="{% url 'checkout' %}">CheckOut</a>
+                                      </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <h4>Your Cart Is Empty </h4>
+                        {% endif %}
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
